@@ -9,6 +9,10 @@
 		.PATH_SEPARATOR
 		.realpath(__DIR__)
 		.PATH_SEPARATOR
+		.realpath(__DIR__)."/rulesets/"
+		.PATH_SEPARATOR
+		.realpath(__DIR__)."/types/"
+		.PATH_SEPARATOR
 		.realpath(__DIR__)."/classes/"
 	);
 

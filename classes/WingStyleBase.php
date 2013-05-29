@@ -21,6 +21,7 @@
 		array( n=>WS_Propertory )
 	*/
 	public $rules=array();
+	public function addTxt($t) { $this->rules[] = new WingStyleText($t); return $this; }
 	
 	// Holds the current selector. IF IT IS NULL we won't print a starting and end bracket!
 	public $selector=-1;
@@ -63,5 +64,5 @@
 			$out .= "}";
 			return $out;
 		}
-	}
+	}	
 } ?>
