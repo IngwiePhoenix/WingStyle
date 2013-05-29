@@ -1,5 +1,6 @@
 <?php class WingStyleComment {
 
+	public $rule=null;
 	public $txt;
 	public $line=false;
 	

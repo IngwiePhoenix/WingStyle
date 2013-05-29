@@ -23,6 +23,6 @@
 	class WingStyle extends WingStyleBase {}
 	
 	// Singleton syntax!
-	function WS($s=null) { return WingStyle::instance($s); }
+	function WS($s=-1) { return WingStyle::instance($s); }
 	
 ?>

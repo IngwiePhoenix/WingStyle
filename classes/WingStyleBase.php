@@ -18,18 +18,18 @@
 
 	/*
 		This keeps a list of the current assigned propertories. will be flusned with the end-call.
-		array( n=>WS_Propertory )
+		array( WS_Rule::$rule=>WS_Rule )
 	*/
 	public $rules=array();
+	
+	// just adds a text entry.
 	public function addTxt($t) { $this->rules[] = new WingStyleText($t); return $this; }
 	
 	// Holds the current selector. IF IT IS NULL we won't print a starting and end bracket!
 	public $selector=-1;
 	
-	public function start($s=null) {
-		#$this->selector=$s; 
-		return $this;
-	}
+	// Start the chain. Returned by WS()
+	public function start($s=null) { return $this; }
 		
 	public function __get($var) {
 		if($var == "end") return $this->end();
