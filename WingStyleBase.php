@@ -8,27 +8,7 @@
 		return self::$INSTANCE->start(); 
 	}
 	public $me;
-	private function __construct() {
-		// Get root path.
-		$me = realpath(dirname(__FILE__));
-		
-		// collect class files:
-		$files = scandir("$me/classes");
-		// strip some files...
-		$files = array_diff($files, array(".",".."));
-		
-		// re-build file list into classes - strip wrong file names if needed.
-		foreach($files as $f) {
-			if(substr(basename($f),0) == ".") continue;
-			if(substr(basename($f),0,2) == "WS" && !is_dir("$me/classes/$f")) {
-				$name = pathinfo($f,PATHINFO_FILENAME);
-				$Mname = str_replace("WS_","",$name);
-				include_once "$me/classes/$f";
-				$this->$Mname = new $name;
-			}
-		}
-		unset($files); $this->me=$me; unset($me);
-	}	
+	private function __construct() {}	
 
 	// Shall the output be beautyful?
 	public $beauty=true;
@@ -52,7 +32,17 @@
 		
 	public function __get($var) {
 		if($var == "end") return $this->end();
-		else return $this->$var;
+		else {
+			if(!isset($this->$var)) {
+				$n = "WS_$var";
+				$this->$var = new $n;
+			}
+			return $this->$var;
+		}
+	}
+	public function __call($n,$p) {
+		if(method_exists($this,$n)) $this->__get($n);
+		return call_user_func_array(array($this->$n,"main"), $p);
 	}
 	
 	public function end() {
