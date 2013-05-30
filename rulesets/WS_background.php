@@ -1,5 +1,7 @@
 <?php class WS_background extends WingStyleDesigner {
 
+	public function getFile() {return __FILE__;}
+
 	public function color($c) {
 		$this->addRule(new WingStyleRule("background-color",$c));
 		return $this->WS(); #Return the main instance - very important!!!

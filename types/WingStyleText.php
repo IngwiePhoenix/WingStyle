@@ -1,6 +1,5 @@
 <?php class WingStyleText {
 
-	public $rule=null;
 	public $txt;
 	
 	public function __construct($t) { $this->txt=$t; }

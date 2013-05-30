@@ -48,7 +48,7 @@
 	
 	public function end() {
 		$rules = $this->rules; $this->rules=array();
-		$selector = $this->selector; $this->selector=null;
+		$selector = $this->selector; $this->selector=-1;
 		$data = array();
 		
 		if($selector == null) {
