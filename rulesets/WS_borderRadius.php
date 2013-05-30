@@ -1,4 +1,3 @@
-
 <?php class WS_borderRadius extends WingStyleDesigner {
 
  public function main($radius, $lefttop=null, $righttop=null, $leftbottom=null, $rightbottom=null) {
