@@ -5,7 +5,7 @@
 		foreach($rules as $r) $this->addRule(new WingStyleRule($r,$rad));
 		return $this->WS();
 	}
-	public function right() {
+	public function right($rad) {
 		$rules = array( "-webkit-border-top-right-radius", "-moz-border-radius-topright", "border-top-right-radius" );
 		foreach($rules as $r) $this->addRule(new WingStyleRule($r,$rad));
 		return $this->WS();
