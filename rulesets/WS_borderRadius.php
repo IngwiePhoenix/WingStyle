@@ -12,4 +12,9 @@
 		return $this->WS();
 	}
 
+<<<<<<< HEAD:rulesets/WS_borderradius.php
 } ?>
+=======
+}
+?>
+>>>>>>> ce8e37dd4841c00c7bbc3d885b9246359618a012:rulesets/WS_borderRadius.php
