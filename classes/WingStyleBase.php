@@ -42,8 +42,12 @@
 		}
 	}
 	public function __call($n,$p) {
-		if(method_exists($this,$n)) $this->__get($n);
-		return call_user_func_array(array($this->$n,"main"), $p);
+		if(method_exists($this,$n)) {
+			return call_user_func_array(array($this,$n), $p);
+		} else if(!isset($this->$n)) {
+			$this->__get($n);
+			return call_user_func_array(array($this->$n,"main"), $p);
+		}
 	}
 	
 	public function end() {
@@ -64,5 +68,12 @@
 			$out .= "}";
 			return $out;
 		}
-	}	
+	}
+	
+	public static $debug=false; // Make true for a lot of debug info.
+	public static function debug($fnc,$line,$msg) {
+		$str = $fnc."(".$line."): ".$msg;
+		if(php_sapi_name() == "cli") $str .= "\n"; else $str .= "<br>\n";
+		echo $str;
+	}
 } ?>

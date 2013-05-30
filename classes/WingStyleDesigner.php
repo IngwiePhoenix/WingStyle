@@ -9,13 +9,18 @@
     	$icp =  $path.PATH_SEPARATOR.get_include_path();
     	if(file_exists($path) && is_dir($path)) set_include_path($icp);
     }
-	public function __get($name) {
+	public function __get($name) { 
 		$mName = "get".ucfirst($name);
 		$cName = "WS_$name";
+		$cName2 = self::whoAmI()."_$name";
+		WingStyle::debug(__FUNCTION__,__LINE__,"$name could be $cName or $cName2");
 		if(method_exists($this,$mName)) {
 			return call_user_func_array(array($this,$mName),array());
-		} else if(!isset($this->$name) && class_exists($cName)) {			
+		} else if(!isset($this->$name) && class_usable($cName)) { WingStyle::debug(__FUNCTION__,__LINE__,"trying $cName");
 			$this->$name = new $cName;
+			return $this->$name;
+		} else if(!isset($this->$name) && class_usable($cName2)) { WingStyleBase::debug(__FUNCTION__,__LINE__,"trying $cName2");
+			$this->$name = new $cName2;
 			return $this->$name;
 		} else return $this->$name;
 	}

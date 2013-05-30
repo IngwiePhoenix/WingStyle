@@ -2,20 +2,7 @@
 
 	// Tell the damn client we're CSS!
 	header("Content-type: text/css");
-	
-	// set includes.
-	set_include_path(
-		get_include_path()
-		.PATH_SEPARATOR
-		.realpath(__DIR__)
-		.PATH_SEPARATOR
-		.realpath(__DIR__)."/rulesets/"
-		.PATH_SEPARATOR
-		.realpath(__DIR__)."/types/"
-		.PATH_SEPARATOR
-		.realpath(__DIR__)."/classes/"
-	);
-	
+
 	// helper functions
 	function is_file_includable($find) {
 		$paths = explode(PATH_SEPARATOR, get_include_path());
@@ -29,17 +16,40 @@
 		}
 		return $found;
 	}
+	
+	function class_usable($cname) { return ( is_file_includable($cname.".php")!=false ? true:false ); }
+	
+	// first and important include:
+	include_once "classes/WingStyleBase.php";
 
+	// trigger debug. Set true to enable!
+	WingStyleBase::$debug = false;
+	
 	// prep the auto loader!
-	function __autoload($cname) {
+	function __autoload($cname) { WingStyleBase::debug(__FUNCTION__,__LINE__,"$cname");
 		$f = is_file_includable($cname.".php");
 		if($f != false)	include_once $f;
+		else WingStyleBase::debug(__FUNCTION__,__LINE__,"Can't find class $cname in include path (".get_include_path().")\n");
 	}
 	
 	// give the user the base class...
 	class WingStyle extends WingStyleBase {}
+
+	
+	// set includes.
+	set_include_path(
+		get_include_path()
+		.PATH_SEPARATOR
+		.realpath(__DIR__)
+		.PATH_SEPARATOR
+		.realpath(__DIR__)."/rulesets/"
+		.PATH_SEPARATOR
+		.realpath(__DIR__)."/types/"
+		.PATH_SEPARATOR
+		.realpath(__DIR__)."/classes/"
+	);	
 	
 	// Singleton syntax!
-	function WS($s=-1) { return WingStyle::instance($s); }
+	function WS($s=-1) { return WingStyle::instance($s); }	
 	
 ?>
