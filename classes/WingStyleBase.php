@@ -15,6 +15,12 @@
 			"hidden"=>"hidden",
 			"inherit"=>"inherit"
 		));
+		$defDir = scandir(WS_ROOT."/defs");
+		$defDir = array_diff($defDir, array(".", ".."));
+		foreach($defDir as $d) {
+			if(substr($d,0,1) != ".") 
+				include_once $d;
+		}
 	}
 	
 	public function addDefs(array $defs) {
@@ -50,18 +56,18 @@
 		else {
 			if(!isset($this->$var)) {
 				$n = "WS_$var";
-				$this->$var = new $n;
+				$this->$var = new $n();
 				$this->$var->init(); // WSD base function
 			}
 			return $this->$var;
 		}
 	}
-	public function __call($n,$p) { $this->debug(__FUNCTION__, __LINE__, __CLASS__.": $n | $p");
+	public function __call($n,$p) { $this->debug(__FUNCTION__, __LINE__, __CLASS__.": $n | ".(is_array($p)?"(".implode(", ",$p).")":$p));
 		if(isset($this->$n) && method_exists($this->$n, "main")) {
 			return call_user_func_array(array($this->$n, "main"), $p);
 		} else if(!isset($this->$n)) {
 			$this->__get($n);
-			return call_user_func_array(array($this->$n,"main"), $p);
+			return call_user_func_array(array($this->$n, "main"), $p);
 		}
 	}
 	

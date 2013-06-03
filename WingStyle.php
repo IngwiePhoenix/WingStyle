@@ -2,6 +2,7 @@
 
 	// Tell the damn client we're CSS!
 	defined("WS_NO_HEADER") or header("Content-type: text/css");
+	define("WS_ROOT",dirname(__FILE__));
 
 	// helper functions
 	function is_file_includable($find) {
@@ -47,6 +48,8 @@
 		.realpath(__DIR__)."/types/"
 		.PATH_SEPARATOR
 		.realpath(__DIR__)."/classes/"
+		.PATH_SEPARATOR
+		.realpath(__DIR__)."/defs/"
 	);	
 	
 	// Singleton syntax!

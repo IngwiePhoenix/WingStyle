@@ -17,12 +17,12 @@
 		if(method_exists($this,$mName)) {
 			return call_user_func_array(array($this,$mName),array());
 		} else if(!isset($this->$name) && class_usable($cName)) { WingStyle::debug(__FUNCTION__,__LINE__,"trying $cName");
-			$this->$name = new $cName;
+			$this->$name = new $cName();
 			return $this->$name;
 		} else if(!isset($this->$name) && class_usable($cName2)) { WingStyleBase::debug(__FUNCTION__,__LINE__,"trying $cName2");
-			$this->$name = new $cName2;
+			$this->$name = new $cName2();
 			return $this->$name;
-		} else return $this->$name;
+		} else if(!isset($this->$name)) return null;
 	}
 	public function __set($name,$val) {
 		$mName = "set".ucfirst($name);
