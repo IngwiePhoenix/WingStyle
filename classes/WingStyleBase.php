@@ -8,7 +8,18 @@
 		return self::$INSTANCE->start(); 
 	}
 	public $me;
-	private function __construct() {}	
+	private function __construct() {
+		$this->addDefs(array(
+			"none"=>"none",
+			"auto"=>"auto",
+			"hidden"=>"hidden",
+			"inherit"=>"inherit"
+		));
+	}
+	
+	public function addDefs(array $defs) {
+		foreach($defs as $n=>$v) defined($n) or define($n, $v);
+	}
 
 	// Shall the output be beautyful?
 	public $beauty=true;
@@ -21,6 +32,9 @@
 		array( WS_Rule::$rule=>WS_Rule )
 	*/
 	public $rules=array();
+	
+	// Default unit for int-values
+	public $defaultUnit="px";
 	
 	// just adds a text entry.
 	public function addTxt($t) { $this->rules[] = new WingStyleText($t); return $this; }
@@ -37,13 +51,14 @@
 			if(!isset($this->$var)) {
 				$n = "WS_$var";
 				$this->$var = new $n;
+				$this->$var->init(); // WSD base function
 			}
 			return $this->$var;
 		}
 	}
-	public function __call($n,$p) {
-		if(method_exists($this,$n)) {
-			return call_user_func_array(array($this,$n), $p);
+	public function __call($n,$p) { $this->debug(__FUNCTION__, __LINE__, __CLASS__.": $n | $p");
+		if(isset($this->$n) && method_exists($this->$n, "main")) {
+			return call_user_func_array(array($this->$n, "main"), $p);
 		} else if(!isset($this->$n)) {
 			$this->__get($n);
 			return call_user_func_array(array($this->$n,"main"), $p);
@@ -61,19 +76,30 @@
 			}
 			return implode($this->seperator,$data);
 		} else {
-			$out = $selector." {\n";
-			foreach($rules as $rule) {
-				$out .= ($this->beauty ? $rule->toBString() : $rule->toString())."\n";
+			if($this->beauty) {
+				$out = $selector." {\n";
+				foreach($rules as $rule) {
+					$out .= $rule->toBString()."\n";
+				}
+				$out .= "}\n";
+			} else {
+				$rs = array($selector,"{");
+				foreach($rules as $rule) {
+					$rs[] = $rule->toString();
+				}
+				$rs[] = "}";
+				$out = implode(" ", $rs)."\n";
 			}
-			$out .= "}";
 			return $out;
 		}
 	}
 	
 	public static $debug=false; // Make true for a lot of debug info.
 	public static function debug($fnc,$line,$msg) {
-		$str = $fnc."(".$line."): ".$msg;
-		if(php_sapi_name() == "cli") $str .= "\n"; else $str .= "<br>\n";
-		echo $str;
+		if(self::$debug) {
+			$str = $fnc."(".$line."): ".$msg;
+			if(php_sapi_name() == "cli") $str .= "\n"; else $str .= "<br>\n";
+			echo $str;
+		}
 	}
 } ?>

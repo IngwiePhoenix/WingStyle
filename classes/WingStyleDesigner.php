@@ -2,7 +2,7 @@
 	
 	public static function whoAmI() { return get_called_class(); }
 
-    public function __construct() {
+    public function init() {
     	$class = self::whoAmI();
     	$class_file = $this->file;
     	$path = substr($class_file, 0, strlen($class_file)-4); #and gone be the .php xD
@@ -29,7 +29,7 @@
 		if(method_exists($this,$mName)) call_user_func_array(array($this,$mName),array($val));
 		else $this->$name=$val;
 	}
-	public function __call($n,$p) {
+	public function __call($n,$p) { $this->debug(__FUNCTION__, __LINE__, __CLASS__.": $n | $p");
 		if(!method_exists($this, $n)) {
 			$this->__get($n);
 			if(method_exists($this->$n, "main")) return call_user_func_array(array($this->$n,"main"), $p);
@@ -42,6 +42,12 @@
 	public function addRule($obj) {
 		$rn = $obj->rule;
 		$this->WS()->rules[]=$obj;
+	}
+	public function format($args) {
+		if(!is_array($args)) $args=array($args);
+		foreach($args as $i=>$v) { if(is_int($v) && !is_string($v)) $args[$i]=$v.WS()->defaultUnit; }
+		$argStr = implode(" ", $args);
+		return $argStr;
 	}
 	
 

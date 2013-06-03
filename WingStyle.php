@@ -1,7 +1,7 @@
 <?php
 
 	// Tell the damn client we're CSS!
-	header("Content-type: text/css");
+	defined("WS_NO_HEADER") or header("Content-type: text/css");
 
 	// helper functions
 	function is_file_includable($find) {
@@ -23,7 +23,7 @@
 	include_once "classes/WingStyleBase.php";
 
 	// trigger debug. Set true to enable!
-	WingStyleBase::$debug = false;
+	WingStyleBase::$debug = (defined("WS_DEBUG") ? WS_DEBUG : false);
 	
 	// prep the auto loader!
 	function __autoload($cname) { WingStyleBase::debug(__FUNCTION__,__LINE__,"$cname");
