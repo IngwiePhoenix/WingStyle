@@ -3,7 +3,7 @@
 	public function main($txt) { 
 		#$this->addComment($txt);
 		$this->addRule(new WingStyleComment($txt));
-		return $this->WS();
+		return WS();
 	}
 
 } ?>

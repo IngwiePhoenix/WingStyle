@@ -1,6 +1,6 @@
 <?php class WS_font extends WingStyleDesigner {
 
-	public function __construct() {
+	public function init() {
 		WS()->addDefs(array(
 			"normal"=>"normal",
 			"italic"=>"italic",
@@ -10,7 +10,7 @@
 
 	private function _ft($t, $ft) {
 		$this->addRule(new WingStyleRule("font-".$t, $this->format($ft)));
-		return $this->WS();
+		return WS();
 	}
 	
 	public function size($s) { return $this->_ft("size", $s); }
@@ -20,7 +20,7 @@
 		foreach($fts as $i=>$f) $fts[$i] = '"'.$f.'"';
 		$fts = implode(", ", $fts);
 		$this->addRule(new WingStyleRule("font-family", $fts));
-		return $this->WS();
+		return WS();
 	}
 
 } ?>

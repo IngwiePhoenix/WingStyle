@@ -2,7 +2,7 @@
 
 	public function main($c) {
 		$this->addRule(new WingStyleRule("color",$c));
-		return $this->WS();
+		return WS();
 	}
 
 } ?>

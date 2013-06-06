@@ -1,6 +1,6 @@
 <?php class WS_listStyle extends WingStyleDesigner {
 
-	public function __construct() {
+	public function init() {
 		WS()->addDefs(array(
 			"armenian"				=>"armenian",
 			"circle"				=>"circle",
@@ -27,12 +27,12 @@
 
 	public function main() {
 		$this->addRule(new WingStyleRule( "list-style", $this->format(func_get_args()) ));
-  		return $this->WS();
+  		return WS();
  	}
 
 	private function _ls($p, $t) {
 		$this->addRule(new WingStyleRule( "list-style-".$p, $t ));
-  		return $this->WS();
+  		return WS();
  	}
  	
  	public function type($p) { return $this->_ls("type", $p); }

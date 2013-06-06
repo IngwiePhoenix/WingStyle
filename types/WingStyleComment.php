@@ -2,7 +2,7 @@
 
 	public $rule=null;
 	public $txt;
-	public $line=false;
+	public $string=false;
 	
 	public function __construct($t,$string) { $this->txt=$t; $this->string = $string; }
 	

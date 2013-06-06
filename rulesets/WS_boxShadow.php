@@ -1,13 +1,13 @@
 <?php class WS_boxShadow extends WingStyleDesigner {
 	
 	public function main() {
-		$props = implode(" ", func_get_args());
-		$brands = array( "moz", "o", "webkit", "khtml" );
+		$props = $this->format(func_get_args());
+		$brands = $this->brands;
 		foreach($brands as $b) {
-			$this->addRule(new WingStyleRule("-".$b."-box-shadow",$props));			
+			$this->addRule(new WingStyleRule($b."box-shadow",$props));			
 		}
 		$this->addRule(new WingStyleRule("box-shadow",$props));			
-		return $this->WS();
+		return WS();
 	}
 
 } ?>

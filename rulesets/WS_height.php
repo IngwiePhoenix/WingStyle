@@ -2,7 +2,7 @@
 
 	public function main($h) {
 		$this->addRule(new WingStyleRule("height", $this->format($h)));
-  		return $this->WS();
+  		return WS();
  	}
 
 } ?>

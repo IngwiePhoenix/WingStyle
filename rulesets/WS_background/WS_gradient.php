@@ -6,7 +6,7 @@
 		$IE = "progid:DXImageTransform.Microsoft.gradient(startColorstr='".$gstart."', endColorstr='".$gend."')";
 		foreach($string as $s) $this->addRule(new WingStyleRule("background",$s));
 		$this->addRule(new WingStyleRule("filter",$IE));
-		return $this->WS(); #Return the main instance - very important!!!
+		return WS();
 	}
 	
 } ?>

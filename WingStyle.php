@@ -3,6 +3,8 @@
 	// Tell the damn client we're CSS!
 	defined("WS_NO_HEADER") or header("Content-type: text/css");
 	define("WS_ROOT",dirname(__FILE__));
+	
+	function __cufa(/* mixed toCall, array args */) { return call_user_func_array("call_user_func_array", func_get_args()); }
 
 	// helper functions
 	function is_file_includable($find) {
@@ -21,8 +23,10 @@
 	function class_usable($cname) { return ( is_file_includable($cname.".php")!=false ? true:false ); }
 	
 	// first and important include:
+	include_once "classes/WingStyleManager.php";
 	include_once "classes/WingStyleBase.php";
-
+	include_once "classes/WingStyleDesigner.php";
+	if(!class_exists("WingStyleManager")) die("First include didnt work.\n");
 	// trigger debug. Set true to enable!
 	WingStyleBase::$debug = (defined("WS_DEBUG") ? WS_DEBUG : false);
 	
@@ -48,8 +52,6 @@
 		.realpath(__DIR__)."/types/"
 		.PATH_SEPARATOR
 		.realpath(__DIR__)."/classes/"
-		.PATH_SEPARATOR
-		.realpath(__DIR__)."/defs/"
 	);	
 	
 	// Singleton syntax!

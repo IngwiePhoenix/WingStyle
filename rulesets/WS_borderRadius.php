@@ -8,7 +8,7 @@
 		foreach($brands as $b) {
 			$this->addRule(new WingStyleRule($b."border-radius",$string));
 		}
-		return $this->WS();
+		return WS();
 	}
 
 } ?>

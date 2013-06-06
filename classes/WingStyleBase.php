@@ -1,4 +1,4 @@
-<?php class WingStyleBase {
+<?php class WingStyleBase extends WingStyleManager {
 
 	// SingletonSyntax: The static class instance.
 	public static $INSTANCE=false;
@@ -15,16 +15,18 @@
 			"hidden"=>"hidden",
 			"inherit"=>"inherit"
 		));
-		$defDir = scandir(WS_ROOT."/defs");
-		$defDir = array_diff($defDir, array(".", ".."));
-		foreach($defDir as $d) {
-			if(substr($d,0,1) != ".") 
-				include_once $d;
-		}
 	}
 	
 	public function addDefs(array $defs) {
-		foreach($defs as $n=>$v) defined($n) or define($n, $v);
+		foreach($defs as $n=>$v) {
+			if(!defined($n)) {
+				define($n, $v);
+			}
+		}
+	}
+	public function addRule($obj) {
+		$rn = $obj->rule;
+		$this->rules[]=$obj;
 	}
 
 	// Shall the output be beautyful?
@@ -50,27 +52,7 @@
 	
 	// Start the chain. Returned by WS()
 	public function start($s=null) { return $this; }
-		
-	public function __get($var) {
-		if($var == "end") return $this->end();
-		else {
-			if(!isset($this->$var)) {
-				$n = "WS_$var";
-				$this->$var = new $n();
-				$this->$var->init(); // WSD base function
-			}
-			return $this->$var;
-		}
-	}
-	public function __call($n,$p) { $this->debug(__FUNCTION__, __LINE__, __CLASS__.": $n | ".(is_array($p)?"(".implode(", ",$p).")":$p));
-		if(isset($this->$n) && method_exists($this->$n, "main")) {
-			return call_user_func_array(array($this->$n, "main"), $p);
-		} else if(!isset($this->$n)) {
-			$this->__get($n);
-			return call_user_func_array(array($this->$n, "main"), $p);
-		}
-	}
-	
+			
 	public function end() {
 		$rules = $this->rules; $this->rules=array();
 		$selector = $this->selector; $this->selector=-1;

@@ -4,13 +4,19 @@
 
 	public function color($c) {
 		$this->addRule(new WingStyleRule("background-color",$c));
-		return $this->WS();
+		return WS();
 	}
 	
 	public function main() {
-		$props = func_get_args();
-		$this->addRule(new WingStyleRule("background",implode(" ",$props)));
-		return $this->WS();
+		$props = $this->format(func_get_args());
+		$this->addRule(new WingStyleRule("background",$props));
+		return WS();
+	}
+
+	public function rgba($r, $g, $b, $o) {
+		$props = array($r, $g, $b, $o);
+		$this->addRule(new WingStyleRule("background","rgba(".implode(",",$props).")"));
+		return WS();
 	}
 
 } ?>

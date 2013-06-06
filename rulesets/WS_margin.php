@@ -4,13 +4,13 @@
 		/*args: $top, $right, $bottom, $left */
 		$args = $this->format(func_get_args());
 		$this->addRule(new WingStyleRule("margin",$args));
-		return $this->WS();
+		return WS();
 	}
 	
 	public function _p($int, $d) {
 		$int = $this->format($int);
 		$this->addRule(new WingStyleRule("margin-".$d ,$int));
-		return $this->WS();
+		return WS();
 	}
 	
 	public function left($n) { return $this->_p($n,"left"); }
