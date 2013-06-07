@@ -18,6 +18,11 @@
 		));
 	}
 	
+	public function preLoad(/*name, name, name, name...*/) {
+		$list = func_get_args();
+		foreach($list as $l) $this->__get($l);
+	}
+	
 	public function addDefs(array $defs) {
 		foreach($defs as $n=>$v) {
 			if(!defined($n)) {
