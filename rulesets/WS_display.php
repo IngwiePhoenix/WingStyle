@@ -9,7 +9,7 @@
 	}
 	
 	public function main($d) {
-		WS()->addRule(new WingStyleRule("display",constant($d)));
+		WS()->addRule(new WingStyleRule("display",$this->format($d)));
 		return WS();
 	}
 

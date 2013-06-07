@@ -9,6 +9,7 @@
 	}
 	public $me;
 	private function __construct() {
+		if(defined("WS_DEBUG")) $this->debug = WS_DEBUG;
 		$this->addDefs(array(
 			"none"=>"none",
 			"auto"=>"auto",
@@ -82,10 +83,38 @@
 		}
 	}
 	
-	public static $debug=false; // Make true for a lot of debug info.
-	public static function debug($fnc,$line,$msg) {
+	// debug yes or no?
+	static $debug=false;
+	public function getDebug() { return self::$debug; }
+	public function setDebug($d) { self::$debug=$d; }
+	
+	/*
+		What to debug?
+		If this is an array, only the functions listed here are shown in the debug.
+		I.e.: WS()->debugFunc=array("__autoload"); #This will now ONLY show output from the autoload function.
+	*/
+	public static $debugFunc = null;
+	
+	public static function debug($msg, $data=array()) {
+		#var_dump(self::$debug); return;
 		if(self::$debug) {
-			$str = $fnc."(".$line."): ".$msg;
+			// prepair debug backtrace
+			$bt = debug_backtrace();
+			$func = $bt[1]["function"];
+			$line = $bt[1]["line"];
+			$class = (isset($bt[1]["class"]) ? $bt[1]["class"]."->" : "MAIN>> ");
+		
+			// stop this if we dont want output here.
+			if(is_array(self::$debugFunc) && !in_array($func, self::$debugFunc)) return;
+
+			foreach($data as $i=>$d) {
+				$_v=$d;
+				if(is_object($d)) $_v = "[Object: ".get_class($d)."]";
+				if(is_array($d)) $_v = "(".implode(",",$d).")";
+				$data[$i]=$_v;
+			}
+			if(!empty($data)) $dataStr = " ".implode(", ",$data); else $dataStr = null; 
+			$str = $class.$func."(".$line."): ".$msg.$dataStr;
 			if(php_sapi_name() == "cli") $str .= "\n"; else $str .= "<br>\n";
 			echo $str;
 		}

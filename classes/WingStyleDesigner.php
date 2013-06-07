@@ -10,13 +10,14 @@
 
 	public $brands = array("-webkit-","-o-","-ms-","-Ms-","-khtml-",null);
 
-	public function WS() { return WingStyle::instance(); }
 	public function addRule($obj) { return WS()->addRule($obj); }
 	public function format($args) {
 		if(!is_array($args)) $args=array($args);
-		foreach($args as $i=>$v) { if(is_int($v) && !is_string($v)) $args[$i]=$v.WS()->defaultUnit; }
-		$argStr = implode(" ", $args);
-		return $argStr;
+		foreach($args as $i=>$v) {
+			                 if(defined($v)) { $args[$i]=constant($v); }
+			if(is_int($v) && !is_string($v)) { $args[$i]=$v.WS()->defaultUnit; }
+		}
+		return implode(" ", $args);
 	}
 	
 } ?>
