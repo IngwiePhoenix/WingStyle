@@ -115,7 +115,7 @@
 			}
 			if(!empty($data)) $dataStr = " ".implode(", ",$data); else $dataStr = null; 
 			$str = $class.$func."(".$line."): ".$msg.$dataStr;
-			if(php_sapi_name() == "cli") $str .= "\n"; else $str .= "<br>\n";
+			if(php_sapi_name() == "cli") $str .= "\n"; else $str = "/* ".$str." */\n";
 			echo $str;
 		}
 	}

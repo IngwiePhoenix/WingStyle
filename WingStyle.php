@@ -1,8 +1,22 @@
 <?php
 
 	// Tell the damn client we're CSS!
-	defined("WS_NO_HEADER") or header("Content-type: text/css");
+	if(!defined("WS_NO_HEADER")) header("Content-type: text/css");
 	define("WS_ROOT",dirname(__FILE__));
+	
+	// echo the copyright.
+	if((defined("WS_COPYRIGHT") && WS_COPYRIGHT==true) || headers_sent()) {
+		echo "/**\n";
+		echo "\t@package: WingStyle\n";
+		echo "\t@package: 1.0\n";
+		echo "\t@author: Ingwie Phoenix <ingwie2000@googlemail.com>\n";
+		echo "\n";
+		echo "\tWingStyle is a PHP-CSS hybrid framework to quickly create a cross-browser compatible style sheet.\n";
+		echo "\tIt supports method chaining and dynamic resource loading - as well as debugging.\n";
+		echo "\tFeel free to add to this software and email me your changes.\n";
+		echo "\tYou are NOT ALLOWED to sell or re-distribute this package! It's a contribution tot he open-source community - sush you sellin' it!\n";
+		echo "**/\n\n";
+	}
 	
 	// first and important include:
 	include_once "classes/WingStyleManager.php";
