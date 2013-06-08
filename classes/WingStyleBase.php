@@ -3,10 +3,8 @@
 	// SingletonSyntax: The static class instance.
 	public static $INSTANCE=false;
 	static function instance($s=null) {
-		if(
-			(is_int($s) || is_float($s) || is_double($s))
-			&& !is_string($s)
-		) $s = $s."%";
+		if(is_numeric($s)) $s = $s."%";
+		if(is_array($s)) $s = implode((WS()->beauty==true?", ":","), $s);
 		if(!self::$INSTANCE) self::$INSTANCE = new WingStyle(); 
 		if(self::$INSTANCE->selector == -1) self::$INSTANCE->selector=$s;
 		return self::$INSTANCE->start(); 

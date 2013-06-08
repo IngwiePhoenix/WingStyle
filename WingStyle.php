@@ -71,6 +71,12 @@
 	);	
 	
 	// Singleton syntax!
-	function WS($s=-1) { return WingStyle::instance($s); }	
+	function WS() {
+		$args = func_get_args();
+		if(empty($args)) $s=-1;
+		elseif(count($args) == 1) $s=array_pop($args);
+		else $s=$args;
+		return WingStyle::instance($s);
+	}	
 	
 ?>
