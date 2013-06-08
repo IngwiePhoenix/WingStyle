@@ -7,9 +7,14 @@
 		WS()->debug("Args: $n");
 		
 		// Big exception - if we have WingStyle(Base) and we're asked for the variable end, we call the method end()!!
-		WS()->debug("Testing for ->end call.");
+		WS()->debug("Testing for ->end OR ->return call.");
 		$we = get_class($this);
-		if(($we == "WingStyle" || $we == "WingStyleBase") && $n == "end") return WS()->end();
+		if($we == "WingStyle" || $we == "WingStyleBase") {
+			switch($n) {
+				case "end": return WS()->__end(); break;
+				case "return": return WS()->__return(); break;
+			}
+		}
 	
 		// the default
 		WS()->debug("Testing for default");

@@ -1,11 +1,7 @@
 <?php class WS_font extends WingStyleDesigner {
 
 	public function init() {
-		WS()->addDefs(array(
-			"normal"=>"normal",
-			"italic"=>"italic",
-			"oblique"=>"oblique"
-		));
+		WS()->addDefs("normal",	"italic", "oblique");
 	}
 
 	private function _ft($t, $ft) {

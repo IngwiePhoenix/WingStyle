@@ -25,6 +25,7 @@
 	if(!class_exists("WingStyleManager")) die("First include didnt work.\n");
 	// give the user the base class...
 	class WingStyle extends WingStyleBase {}
+	if(defined("WS_DEBUG")) WingStyle::$debug = WS_DEBUG;
 
 	function __cufa(/* mixed toCall, array args */) { return call_user_func_array("call_user_func_array", func_get_args()); }
 

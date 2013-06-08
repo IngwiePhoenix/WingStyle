@@ -1,28 +1,21 @@
 <?php class WS_listStyle extends WingStyleDesigner {
 
 	public function init() {
-		WS()->addDefs(array(
-			"armenian"				=>"armenian",
-			"circle"				=>"circle",
-			"cjk_ideographic"		=>"cjk-ideographic",
-			"decimal"				=>"decimal",
-			"decimal_leading_zero"	=>"decimal-leading-zero",
-			"disc"					=>"disc",
-			"georgian"				=>"georgian",
-			"hebrew"				=>"hebrew",
-			"hiragana"				=>"hiragana",
-			"hiragana_iroha"		=>"hiragana-iroha",
-			"katakana"				=>"katakana",
-			"katakana_iroha"		=>"katakana-iroha",
-			"lower_alpha"			=>"lower-alpha",
-			"lower_greek"			=>"lower-greek",
-			"lower_latin"			=>"lower-latin",
-			"lower_roman"			=>"lower-roman",
-			"square"				=>"square",
-			"upper_alpha"			=>"upper-alpha",
-			"upper_latin"			=>"upper-latin",
-			"upper_roman"			=>"upper-roman"
-		));
+		WS()->addDefs("armenian","circle","decimal","disc","georgian","hebrew","hiragana","katakana","square",
+			array( #The fine-tuning comes here... :3
+				"cjk_ideographic"		=>"cjk-ideographic",
+				"decimal_leading_zero"	=>"decimal-leading-zero",
+				"hiragana_iroha"		=>"hiragana-iroha",
+				"katakana_iroha"		=>"katakana-iroha",
+				"lower_alpha"			=>"lower-alpha",
+				"lower_greek"			=>"lower-greek",
+				"lower_latin"			=>"lower-latin",
+				"lower_roman"			=>"lower-roman",
+				"upper_alpha"			=>"upper-alpha",
+				"upper_latin"			=>"upper-latin",
+				"upper_roman"			=>"upper-roman"
+			)
+		);
 	}
 
 	public function main() {
