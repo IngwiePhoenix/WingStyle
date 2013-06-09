@@ -77,6 +77,9 @@
 		elseif(count($args) == 1) $s=array_pop($args);
 		else $s=$args;
 		return WingStyle::instance($s);
-	}	
+	}
+	
+	// Run it by itself to trigger the constructor. Will auto-load constants and alike.
+	WS();
 	
 ?>
