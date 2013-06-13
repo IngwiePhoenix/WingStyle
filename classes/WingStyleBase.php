@@ -7,9 +7,9 @@
 		if(is_array($s)) $s = implode((WS()->beauty==true?", ":","), $s);
 		if(!self::$INSTANCE) self::$INSTANCE = new WingStyle(); 
 		if(self::$INSTANCE->selector == -1) self::$INSTANCE->selector=$s;
-		return self::$INSTANCE->start(); 
+		return self::$INSTANCE;
 	}
-	public $me;
+
 	private function __construct() {
 		$this->debug("Wellcome to WingStyle! Debugger is started and running.");
 		$this->addDefs(array(
@@ -45,7 +45,9 @@
 			}
 		}
 	}
-	public function addRule($obj) {
+	
+	// Add rule to list
+	public function addRule(WingStyleRule $obj) {
 		$rn = $obj->rule;
 		$this->rules[]=$obj;
 	}
@@ -55,6 +57,9 @@
 	
 	// if above is false, how would you like the strings seperated?
 	public $seperator=" ";
+	
+	// The amount of tabs being __ADDED__ to each line. addition to the beauty parameter.
+	public $tabLevel=0;
 
 	/*
 		This keeps a list of the current assigned propertories. will be flusned with the end-call.
@@ -70,10 +75,7 @@
 	
 	// Holds the current selector. IF IT IS NULL we won't print a starting and end bracket!
 	public $selector=-1;
-	
-	// Start the chain. Returned by WS()
-	public function start($s=null) { return $this; }
-		
+			
 	public function __return() {
 		$this->debug("Saving old beauty state: ",array($this->beauty));
 		$ob = $this->beauty; # save
@@ -88,6 +90,9 @@
 		$this->__reset();
 		$data = array();
 		
+		$tabs="";
+		for($t=0; $t<$this->tabLevel; $t++) { $this->debug("Current tabLevel: ".$this->tabLevel.", Tabs: $t"); $tabs.="\t"; }
+		
 		if($selector == null) {
 			foreach($rules as $rule) {
 				$data[] = $rule->toString();
@@ -95,11 +100,11 @@
 			return implode($this->seperator,$data);
 		} else {
 			if($this->beauty) {
-				$out = $selector." {\n";
+				$out = $tabs.$selector." {\n";
 				foreach($rules as $rule) {
-					$out .= $rule->toBString()."\n";
+					$out .= $tabs.$rule->toBString()."\n";
 				}
-				$out .= "}\n";
+				$out .= $tabs."}\n";
 			} else {
 				$rs = array($selector,"{");
 				foreach($rules as $rule) {
@@ -134,7 +139,7 @@
 			$bt = debug_backtrace();
 			$func = $bt[1]["function"];
 			$line = $bt[1]["line"];
-			$class = (isset($bt[1]["class"]) ? $bt[1]["class"]."->" : "MAIN>> ");
+			$class = (isset($bt[1]["class"]) ? $bt[1]["class"]." -> " : ": ");
 		
 			// stop this if we dont want output here.
 			if(is_array(self::$debugFunc) && !in_array($func, self::$debugFunc)) return;
@@ -152,18 +157,9 @@
 		}
 	}
 	
-	public function keyframes() {
+	public function media() {
 		$args = func_get_args();
-		$name = $args[0];
-		unset($args[0]);
-		$kfs = array($name=>$args);
-		$this->__reset();
-		$res = array();
-		foreach($kfs as $n=>$k) {
-			WS("@keyframes $n");
-			foreach($k as $f) WS()->addTxt($f);
-			$res[] = WS()->end;
-		}
-		return implode("\n", $res);
+		if(empty($args)) { $this->tabLevel=0; return "}\n"; }
+		else { $this->tabLevel=1; return "@media ".implode(", ",$args)." {\n"; }
 	}
 } ?>

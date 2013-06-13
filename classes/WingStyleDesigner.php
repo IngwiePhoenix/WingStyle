@@ -11,7 +11,7 @@
 	public $brands = array("-webkit-","-o-","-ms-","-Ms-","-khtml-",null);
 
 	public function addRule($obj) { return WS()->addRule($obj); }
-	public function format($args) {
+	public static function format($args) {
 		if(!is_array($args)) $args=array($args);
 		foreach($args as $i=>$v) {
 			                 if(defined($v)) { $args[$i]=constant($v); }

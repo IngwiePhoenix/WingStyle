@@ -58,11 +58,8 @@
 		WS()->debug("Trying to call the main-method of the requested class.");
 		if($this->useMain && method_exists($this->$n, "main")) return call_user_func_array(array($this->$n, "main"), $p);
 		elseif(method_exists($this, "addRule")) {
-			WS()->debug("Error - attaching fake css-rule if the beauty is enabled");
-			if(WS()->beauty) {
-				WS()->addRule(new WingStyleComment('ERROR: Can not find method/rule "'.$n.'". Applying fake CSS rule.', true));
-				WS()->addRule(new WingStyleRule("-WingStyle-".$n,implode(" ", $p)));
-			}
+			WS()->debug("Error, sorta. Acting like we know the rule although we dont.");
+			WS()->addRule(new WingStyleRule("/*WS*/".$n,WingStyleDesigner::format($p)));
 			return WS(); 
 		} else die("Can't work method $n on class ".get_class($this)."!\n");
 	}
