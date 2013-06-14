@@ -12,12 +12,49 @@
 
 	private function __construct() {
 		$this->debug("Wellcome to WingStyle! Debugger is started and running.");
-		$this->addDefs(array(
-			"none"=>"none",
-			"auto"=>"auto",
-			"hidden"=>"hidden",
-			"inherit"=>"inherit"
-		));
+		$this->addDefs(
+			array(
+				"none"=>"none",
+				"auto"=>"auto",
+				"hidden"=>"hidden",
+				"inherit"=>"inherit"
+			),
+			
+			// tag names.
+			'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'b', 'base', 'basefont', 'bdo', 'big',
+			'blockquote', 'body', 'br', 'button', 'caption', 'center', 'cite', 'code', 'col', 'colgroup',
+			'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'fieldset', 'font', 'form',
+			'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'html', 'i', 'iframe', 
+			'img', 'input', 'ins', 'isindex', 'kbd', 'label', 'legend', 'li', 'link', 'map', 'menu', 'meta', 
+			'noframes', 'noscript', 'object', 'ol', 'optgroup', 'option',
+			'p', 'param', 'pre', 'q', 's', 'samp', 'script', 'select', 'small', 'span', 'strike', 'strong', 
+			'style', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr',
+			'tt', 'u', 'ul', 'var',
+											
+			// Colors, A LOT of them.
+            "aliceblue", "antiquewhite", "aqua", "aquamarine", "azure", "beige", "bisque", "black",
+            "blanchedalmond", "blue", "blueviolet", "brown", "burlywood", "cadetblue", "chartreuse",
+            "chocolate", "coral", "cornflowerblue", "cornsilk", "crimson", "cyan", "darkblue",
+            "darkcyan", "darkgoldenrod", "darkgray", "darkgreen", "darkkhaki", "darkmagenta",
+            "darkolivegreen", "darkorange", "darkorchid", "darkred", "darksalmon","darkseagreen",
+            "darkslateblue", "darkslategray", "darkturquoise", "darkviolet", "deeppink",
+            "deepskyblue", "dimgray", "dodgerblue", "firebrick", "floralwhite", "forestgreen",
+            "fuchsia", "gainsboro", "ghostwhite", "gold", "goldenrod", "gray", "green",
+            "greenyellow", "honeydew", "hotpink", "indianred", "indigo", "ivory", "khaki",
+            "lavender", "lavenderblush", "lawngreen", "lemonchiffon", "lightblue", "lightcoral",
+            "lightcyan", "lightgoldenrodyellow", "lightgray", "lightgreen", "lightpink",
+            "lightsalmon", "lightseagreen", "lightskyblue", "lightslategray", "lightsteelblue", 
+            "lightyellow", "lime", "limegreen", "linen", "magenta", "maroon", "mediumaquamarine", 
+            "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen", "mediumslateblue", 
+            "mediumspringgreen", "mediumturquoise", "mediumvioletred", "midnightblue", "mintcream", 
+            "mistyrose", "moccasin", "navajowhite", "navy", "oldlace", "olive", "olivedrab", "orange",
+            "orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise", "palevioletred",
+            "papayawhip", "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "red",
+            "rosybrown", "royalblue", "saddlebrown", "salmon", "sandybrown", "seagreen", "seashell",
+            "sienna", "silver", "skyblue", "slateblue", "slategray", "snow", "springgreen", "steelblue",
+            "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "white", "whitesmoke",
+            "yellow", "yellowgreen"
+        );
 	}
 	
 	public function load(/*name, name, name, name...*/) {
