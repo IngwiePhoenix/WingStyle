@@ -4,23 +4,19 @@
 	public static $INSTANCE=false;
 	static function instance($s=null) {
 		if(is_numeric($s)) $s = $s."%";
-		if(is_array($s)) $s = implode((WS()->beauty==true?", ":","), $s);
+		if(is_array($s)) $_s = implode((WS()->beauty==true?", ":","), $s); else $_s=$s;
 		if(!self::$INSTANCE) self::$INSTANCE = new WingStyle(); 
-		if(self::$INSTANCE->selector == -1) self::$INSTANCE->selector=$s;
+		if(!is_null($s)) self::$INSTANCE->selector=$_s;
 		return self::$INSTANCE;
 	}
 
 	private function __construct() {
 		$this->debug("Wellcome to WingStyle! Debugger is started and running.");
 		$this->addDefs(
-			array(
-				"none"=>"none",
-				"auto"=>"auto",
-				"hidden"=>"hidden",
-				"inherit"=>"inherit"
-			),
+			// Definitions.
+			"none", "auto",	"hidden", "inherit",
 			
-			// tag names.
+			// Tags.
 			'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'b', 'base', 'basefont', 'bdo', 'big',
 			'blockquote', 'body', 'br', 'button', 'caption', 'center', 'cite', 'code', 'col', 'colgroup',
 			'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'fieldset', 'font', 'form',
@@ -84,7 +80,7 @@
 	}
 	
 	// Add rule to list
-	public function addRule(WingStyleRule $obj) {
+	public function addRule($obj) {
 		$rn = $obj->rule;
 		$this->rules[]=$obj;
 	}
