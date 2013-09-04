@@ -11,6 +11,7 @@
 	
 	public function size($s) { return $this->_ft("size", $s); }
 	public function style($s) { return $this->_ft("style", $s); }
+	public function weight($w) { return $this->_ft("weight", $w); }
 	public function family() {
 		$fts = func_get_args();
 		foreach($fts as $i=>$f) $fts[$i] = '"'.$f.'"';

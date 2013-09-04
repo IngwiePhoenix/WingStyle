@@ -14,7 +14,7 @@
 		$this->debug("Wellcome to WingStyle! Debugger is started and running.");
 		$this->addDefs(
 			// Definitions.
-			"none", "auto",	"hidden", "inherit",
+			"none", "auto",	"hidden", "inherit", "fixed",
 			
 			// Tags.
 			'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'b', 'base', 'basefont', 'bdo', 'big',
@@ -93,6 +93,16 @@
 	
 	// The amount of tabs being __ADDED__ to each line. addition to the beauty parameter.
 	public $tabLevel=0;
+	
+	// Brands!
+	public $brands = array(
+		"WebKit"=>"-webkit-",
+		"Opera"=>"-o-",
+		"Microsoft1"=>"-ms-",
+		"Microsoft2"=>"-Ms-",
+		"KHtml"=>"-khtml-",
+		"Brandless"=>null
+	);
 
 	/*
 		This keeps a list of the current assigned propertories. will be flusned with the end-call.
