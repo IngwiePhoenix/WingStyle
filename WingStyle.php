@@ -3,9 +3,8 @@
 	// Tell the damn client we're CSS!
 	if(!defined("WS_NO_HEADER")) header("Content-type: text/css");
 	define("WS_ROOT",dirname(__FILE__));
-	
-	// echo the copyright.
-	if((defined("WS_COPYRIGHT") && WS_COPYRIGHT==true) || headers_sent()) {
+
+	function ws_copyright() {
 		echo "/**\n";
 		echo "\t@package: WingStyle\n";
 		echo "\t@package: 1.0\n";
@@ -17,7 +16,12 @@
 		echo "\tYou are NOT ALLOWED to sell or re-distribute this package! It's a contribution tot he open-source community - sush you sellin' it!\n";
 		echo "**/\n\n";
 	}
-	
+
+	// echo the copyright.
+	if((defined("WS_COPYRIGHT") && WS_COPYRIGHT==true) || headers_sent()) {
+		ws_copyright();
+	}
+
 	// first and important include:
 	include_once "classes/WingStyleManager.php";
 	include_once "classes/WingStyleBase.php";
@@ -45,18 +49,18 @@
 		}
 		return $found;
 	}
-	
+
 	function class_usable($cname) { WingStyle::debug("Testing for $cname"); return ( is_file_includable($cname.".php")!=false ? true:false ); }
-		
+
 	// prep the auto loader!
-	function __autoload($cname) { 
+	function __autoload($cname) {
 		WingStyle::debug("Loading: ".$cname);
 		$f = is_file_includable($cname.".php");
 		if($f != false)	include_once $f;
 		else WingStyle::debug("Can't find class $cname in include path (".get_include_path().")\n");
 	}
-	
-	
+
+
 	// set includes.
 	set_include_path(
 		get_include_path()
@@ -68,8 +72,8 @@
 		.realpath(__DIR__)."/types/"
 		.PATH_SEPARATOR
 		.realpath(__DIR__)."/classes/"
-	);	
-	
+	);
+
 	// Singleton syntax!
 	function WS() {
 		$args = func_get_args();
@@ -78,8 +82,8 @@
 		else $s=$args;
 		return WingStyle::instance($s);
 	}
-	
+
 	// Run it by itself to trigger the constructor. Will auto-load constants and alike.
 	WS();
-	
+
 ?>
