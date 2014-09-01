@@ -64,7 +64,8 @@
 		foreach($defs as $d) {
 			$this->debug("Working:",array($d));
 			if(is_string($d)) {
-				$this->debug("Verbalizing:",array($d)); defined($d) or define($d, $d);
+				$this->debug("Verbalizing:",array($d));
+				if(!defined($d)) define($d, $d);
 			}
 			if(is_array($d)) {
 				foreach($d as $i=>$v) {

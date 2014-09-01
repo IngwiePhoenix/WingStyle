@@ -1,7 +1,7 @@
 <?php class WS_background extends WingStyleDesigner {
 
 	public function getFile() {return __FILE__;}
-	
+
 	public function init() {
 		WS()->addDefs(
 			"repeat",
@@ -15,7 +15,7 @@
 		$this->addRule(new WingStyleRule("background-color",$c));
 		return WS();
 	}
-	
+
 	public function main() {
 		$props = $this->format(func_get_args());
 		$this->addRule(new WingStyleRule("background",$props));
@@ -25,6 +25,16 @@
 	public function rgba($r, $g, $b, $o) {
 		$props = array($r, $g, $b, $o);
 		$this->addRule(new WingStyleRule("background","rgba(".implode(",",$props).")"));
+		return WS();
+	}
+
+	public function url($u) {
+		$this->addRule(new WingStyleRule("background", 'url("'.$u.'")'));
+		return WS();
+	}
+
+	public function size($u) {
+		$this->addRule(new WingStyleRule("background-size", $u));
 		return WS();
 	}
 
