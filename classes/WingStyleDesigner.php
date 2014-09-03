@@ -1,7 +1,7 @@
 <?php class WingStyleDesigner extends WingStyleManager {
-	
+
 	public $brands;
-	
+
     public function __construct() {
     	$this->brands = WS()->brands;
     	$class = self::whoAmI();
@@ -16,10 +16,10 @@
 		if(!is_array($args)) $args=array($args);
 		foreach($args as $i=>$v) {
 			if(defined($v)) { $args[$i]=constant($v); }
-			if(is_int($v) && !is_string($v)) { $args[$i]=$v.WS()->defaultUnit; }
+			if((is_int($v)||is_float($v)) && !is_string($v)) { $args[$i]=$v.WS()->defaultUnit; }
 			if($v === 0) $args[$i]=$v;
 		}
 		return implode(" ", $args);
 	}
-	
+
 } ?>
