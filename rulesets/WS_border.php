@@ -18,8 +18,8 @@
 	}
 
 	public function main() {
-		$props = func_get_args();
-		$this->addRule(new WingStyleRule("border",implode(" ",$props)));
+		$props = $this->format(func_get_args());
+		$this->addRule(new WingStyleRule("border",$props));
 		return WS();
 	}
 

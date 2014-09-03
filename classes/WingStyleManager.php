@@ -5,7 +5,7 @@
 
 	public function __get($n) {
 		WS()->debug("Args: $n");
-		
+
 		// Big exception - if we have WingStyle(Base) and we're asked for the variable end, we call the method end()!!
 		WS()->debug("Testing for ->end OR ->return call.");
 		$we = get_class($this);
@@ -15,7 +15,7 @@
 				case "return": return WS()->__return(); break;
 			}
 		}
-	
+
 		// the default
 		WS()->debug("Testing for default");
 		if(isset($this->$n)) return $this->$n;
@@ -24,7 +24,7 @@
 		WS()->debug("Trying to activate the get-method.");
 		$get = "get".ucfirst($n);
 		if(method_exists($this, $get)) return call_user_func(array($this, $get), array());
-		
+
 		// auto-include
 		WS()->debug("Attempting to auto-include and attach a new class/object.");
 		$class = "WS_".$n;
@@ -33,11 +33,11 @@
 			if(method_exists($this->$n, "init")) $this->$n->init();
 			return $this->$n;
 		}
-		
+
 		WS()->debug("Nothing helped, returning NULL.");
 		return null;
 	}
-	
+
 	public function __set($n,$v) {
 		WS()->debug("Args:", array($n, $v));
 		WS()->debug("Trying the set-method or just normally applying the change.");
@@ -48,20 +48,33 @@
 	}
 
 	public function __call($n,$p) {
-		WS()->debug("Args: $n and (".implode(",",$p).")");
-		
+		$debugMsg = "Args: $n and (";
+		$debugArray = array();
+		foreach($p as $p_a) {
+			if(!is_array($p_a))
+				$debugArray[] = $p_a;
+			else {
+				$tarr = array();
+				foreach($p_a as $i=>$v) {
+					$tarr[] = $i.' => '.$v;
+				}
+				$debugArray[] = "[".implode(",",$tarr)."]";
+			}
+		}
+		$debugMsg.= implode(",", $debugArray).")";
+
 		// directly call the method - default
 		WS()->debug("Trying to call the method the default way.");
 		if(method_exists($this, $n)) return call_user_func_array(array($this,$n),$p);
-		
+
 		// access main()
 		WS()->debug("Trying to call the main-method of the requested class.");
 		if($this->useMain && method_exists($this->$n, "main")) return call_user_func_array(array($this->$n, "main"), $p);
 		elseif(method_exists($this, "addRule")) {
 			WS()->debug("Error, sorta. Acting like we know the rule although we dont. Method: $n");
 			WS()->addRule(new WingStyleRule($n,WingStyleDesigner::format($p)));
-			return WS(); 
+			return WS();
 		} else die("Can't work method $n on class ".get_class($this)."!\n");
 	}
-	
+
 } ?>
