@@ -1,5 +1,7 @@
 <?php class WS_border extends WingStyleDesigner {
 
+	public function getFile() { return __FILE__; }
+
 	public function init() {
 		WS()->addDefs(
 			"dotted", "dashed", "solid", "double",
@@ -22,5 +24,4 @@
 		$this->addRule(new WingStyleRule("border",$props));
 		return WS();
 	}
-
 } ?>

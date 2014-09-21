@@ -189,7 +189,7 @@
 			$bt = debug_backtrace();
 			$func = $bt[1]["function"];
 			$line = $bt[1]["line"];
-			$class = (isset($bt[1]["class"]) ? $bt[1]["class"]." -> " : ": ");
+			$class = (isset($bt[1]["class"]) ? $bt[1]["class"]." -> " : "");
 
 			// stop this if we dont want output here.
 			if(is_array(self::$debugFunc) && !in_array($func, self::$debugFunc)) return;

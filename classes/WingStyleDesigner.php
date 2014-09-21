@@ -22,4 +22,26 @@
 		return implode(" ", $args);
 	}
 
+	public function preInit() {
+		$me = get_class($this);
+		$subdir = dirname($this->getFile())."/".get_class($this);
+		WS()->debug("Registering: $subdir");
+		$clist = glob($subdir."/*.php");
+		foreach($clist as $bfile) {
+			$file = basename($bfile);
+			$rfile = substr($file, 0, strlen($file)-4);
+			WS()->debug("Testing for: $rfile ($bfile)");
+			// Testing if the class name extends upon this one.
+			if(strpos($rfile, $me) !== FALSE && substr($rfile, 0, strlen($me)) == $me) {
+				$prop = substr($rfile, strlen($me)+1);
+				WS()->debug("$rfile matched with $me. Adding: $prop");
+				$icp = $subdir.PATH_SEPARATOR.get_include_path();
+				set_include_path($icp);
+				include_once($bfile);
+				$this->$prop = new $rfile();
+			}
+		}
+	}
+
+
 } ?>

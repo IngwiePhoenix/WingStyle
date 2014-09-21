@@ -26,11 +26,14 @@
 		if(method_exists($this, $get)) return call_user_func(array($this, $get), array());
 
 		// auto-include
-		WS()->debug("Attempting to auto-include and attach a new class/object.");
 		$class = "WS_".$n;
+		WS()->debug("Attempting to auto-include and attach new class/object: $class");
 		if(!isset($this->$n) && class_usable($class)) {
 			$this->$n = new $class();
-			if(method_exists($this->$n, "init")) $this->$n->init();
+			if(method_exists($this->$n, "init")) {
+				$this->$n->preInit();
+				$this->$n->init();
+			}
 			return $this->$n;
 		}
 
@@ -71,8 +74,9 @@
 		WS()->debug("Trying to call the main-method of the requested class.");
 		if($this->useMain && method_exists($this->$n, "main")) return call_user_func_array(array($this->$n, "main"), $p);
 		elseif(method_exists($this, "addRule")) {
-			WS()->debug("Error, sorta. Acting like we know the rule although we dont. Method: $n");
-			WS()->addRule(new WingStyleRule($n,WingStyleDesigner::format($p)));
+			$nn = strtolower(preg_replace("/([A-Z])/",'-$1', $n));
+			WS()->debug("Error, sorta. Acting like we know the rule although we dont. Method: $n as $nn");
+			WS()->addRule(new WingStyleRule($nn,WingStyleDesigner::format($p)));
 			return WS();
 		} else die("Can't work method $n on class ".get_class($this)."!\n");
 	}

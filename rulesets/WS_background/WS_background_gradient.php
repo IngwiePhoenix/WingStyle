@@ -1,4 +1,4 @@
-<?php class WS_gradient extends WingStyleDesigner {
+<?php class WS_background_gradient extends WingStyleDesigner {
 
 	public function linear($gstart, $gend) {
 		$string[] = "-webkit-gradient(linear, left top, left bottom, from($gstart), to($gend))";
@@ -8,5 +8,5 @@
 		$this->addRule(new WingStyleRule("filter",$IE));
 		return WS();
 	}
-	
+
 } ?>
