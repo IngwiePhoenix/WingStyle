@@ -16,13 +16,16 @@
 		if(!is_array($args)) $args=array($args);
 		foreach($args as $i=>$v) {
 			if(defined($v)) { $args[$i]=constant($v); }
-			if((is_int($v)||is_float($v)) && !is_string($v)) { $args[$i]=$v.WS()->defaultUnit; }
+			if(is_numeric($v) && !is_string($v)) { $args[$i]=$v.WS()->defaultUnit; }
 			if($v === 0) $args[$i]=$v;
 		}
 		return implode(" ", $args);
 	}
 
 	public function preInit() {
+		// This method only works correctly if getFile is defined.
+		if(!method_exists($this, "getFile")) return;
+
 		$me = get_class($this);
 		$subdir = dirname($this->getFile())."/".get_class($this);
 		WS()->debug("Registering: $subdir");
