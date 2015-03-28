@@ -7,7 +7,7 @@
 	function ws_copyright() {
 		echo "/**\n";
 		echo "\t@package: WingStyle\n";
-		echo "\t@package: 1.0\n";
+		echo "\t@package: 1.1\n";
 		echo "\t@author: Ingwie Phoenix <ingwie2000@googlemail.com>\n";
 		echo "\n";
 		echo "\tWingStyle is a PHP-CSS hybrid framework to quickly create a cross-browser compatible style sheet.\n";
