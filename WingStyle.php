@@ -53,12 +53,12 @@
 	function class_usable($cname) { WingStyle::debug("Testing for $cname"); return ( is_file_includable($cname.".php")!=false ? true:false ); }
 
 	// prep the auto loader!
-	function __autoload($cname) {
+	spl_autoload_register(function($cname) {
 		WingStyle::debug("Loading: ".$cname);
 		$f = is_file_includable($cname.".php");
-		if($f != false)	include_once $f;
+		if($f != false)	require_once $f;
 		else WingStyle::debug("Can't find class $cname in include path (".get_include_path().")\n");
-	}
+	});
 
 
 	// set includes.
